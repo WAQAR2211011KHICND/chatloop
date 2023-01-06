@@ -1,24 +1,19 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+import Signin from './Authentication & Authorizaton/SignIn';
+import Signup from './Authentication & Authorizaton/SignUp';
+import Home from './Home/Home';
 
 function App() {
+  const [LoginState , setLoginState  ] = useState(localStorage.getItem('isLogin')!==null);
+  const [appState, setAppState] = useState("signup");
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+     {appState=="signup" && !(LoginState) && <Signup setAppState={setAppState} />}
+     {appState=="signin" && !(LoginState) && <Signin setLoginState={setLoginState} setAppState={setAppState} />}
+     {LoginState  && <Home appState={appState} setAppState={setAppState} />}
+    </>
   );
 }
 
